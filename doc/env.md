@@ -1,4 +1,4 @@
-# Pix N Match
+# :camera: Pix N Match :camera:
 ## Préparer l'environnement de travail
 
 1. [Installer PyCharm;](https://www.jetbrains.com/pycharm/download/#section=linux)
