@@ -1,7 +1,7 @@
 import cv2
 import os
 
-from src.analysis.blur import get_blur
+from src.analysis.blur import get_blurriness
 from src.analysis.dominant import get_dominant_color
 
 
@@ -13,7 +13,7 @@ def label_videos(directory):
             cv2.COLOR_BGR2RGB)
         yield (
             filepath,
-            get_blur(photo),
+            get_blurriness(photo),
             get_dominant_color(photo)
         )
 
