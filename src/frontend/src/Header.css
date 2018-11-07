@@ -1,0 +1,11 @@
+.header-container{
+    height: 100px;
+    width: 100vw;
+    background-color: black;
+}
+
+.header-menu-item-container {
+    height: 100px;
+    width: 100%;
+    background-color: gray;
+}
