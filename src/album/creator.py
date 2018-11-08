@@ -25,15 +25,17 @@ def create_album(directory,
             photos_8x10.append(cropped)
         elif aspect_ratio == SupportedFormat._5x7:
             photos_5x7.append(cropped)
-    
+
     page_dimension = pixel_dimension(background_size, dpi)
     pages = []
+    random.shuffle(photos_8x10)
     for photo in photos_8x10:
         page = Image.new('RGB', page_dimension, background_color)
         offset = pixel_dimension((0.25, 0.5), dpi)
         page.paste(photo, offset)
         pages.append(page)
 
+    random.shuffle(photos_5x7)
     for i in range(0, len(photos_5x7), 2):
         page = Image.new('RGB', page_dimension, background_color)
         photo1 = photos_5x7[i]
