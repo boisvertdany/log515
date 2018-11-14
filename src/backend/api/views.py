@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework.permissions import IsAdminUser
 
 from . import models
 from . import serializers
@@ -8,6 +9,7 @@ from . import serializers
 class ListUser(generics.ListCreateAPIView):
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.UserSerializer
+    permission_classes = (IsAdminUser,)
 
 class DetailUser(generics.RetrieveUpdateAPIView):
     queryset = models.CustomUser.objects.all()
