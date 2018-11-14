@@ -39,3 +39,23 @@ class DetailAlbum(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         return models.Album.objects.filter(user_id=self.request.user.id)
+
+class ListPhoto(generics.ListCreateAPIView):
+    queryset = models.Photo.objects.all()
+    serializer_class = serializers.PhotoSerializer
+
+    def get_queryset(self):
+        return models.Photo.objects.filter(user_id=self.request.user.id)
+
+    def perform_create(self, serializer):
+        photo = models.Photo.objects.create(
+            image = serializer.validated_data.get('image'),
+            user_id = self.request.user.id
+        )
+
+class DetailPhoto(generics.RetrieveDestroyAPIView):
+    queryset = models.Photo.objects.all()
+    serializer_class = serializers.PhotoSerializer
+
+    def get_queryset(self):
+        return models.Photo.objects.filter(user_id=self.request.user.id)

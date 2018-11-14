@@ -9,4 +9,6 @@ urlpatterns = [
     path('auth/register/', include('rest_auth.registration.urls')),
     path('album/', views.ListAlbum.as_view()),
     path('album/<int:pk>/', views.DetailAlbum.as_view()),
+    path('photo/', views.ListPhoto.as_view()),
+    path('photo/<int:pk>/', views.DetailPhoto.as_view()),
 ]
