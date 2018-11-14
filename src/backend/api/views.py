@@ -14,6 +14,9 @@ class ListAlbum(generics.ListCreateAPIView):
     queryset = models.Album.objects.all()
     serializer_class = serializers.AlbumSerializer
 
+    def get_queryset(self):
+        return models.Album.objects.filter(user_id=self.request.user.id)
+
     def perform_create(self, serializer):
         album = models.Album.objects.create(
             title = serializer.validated_data.get('title'),
@@ -23,3 +26,6 @@ class ListAlbum(generics.ListCreateAPIView):
 class DetailAlbum(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Album.objects.all()
     serializer_class = serializers.AlbumSerializer
+
+    def get_queryset(self):
+        return models.Album.objects.filter(user_id=self.request.user.id)
