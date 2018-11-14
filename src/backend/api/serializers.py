@@ -4,11 +4,11 @@ from . import models
 class AlbumSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Album
-        fields = ('id', 'title', 'user_id')
+        fields = ('id', 'title')
 
 class UserSerializer(serializers.ModelSerializer):
     albums = AlbumSerializer(many=True)
 
     class Meta:
         model = models.CustomUser
-        fields = ('email', 'username', 'note', 'albums')
+        fields = ('email', 'username', 'albums')
