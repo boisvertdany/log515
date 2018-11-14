@@ -1,10 +1,7 @@
 from rest_framework import serializers
-from api import models
+from . import models
 
-class AlbumSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        fields = (
-            'id',
-            'title',
-        )
-        model = models.Album
+        model = models.CustomUser
+        fields = ('email', 'username', 'note')
