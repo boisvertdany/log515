@@ -8,6 +8,8 @@ from . import serializers
 from .album_creation_helper import createAlbum
 from src.analysis.choose import Warmth
 
+import random
+
 class ListUser(generics.ListCreateAPIView):
     queryset = models.CustomUser.objects.all()
     serializer_class = serializers.UserSerializer
@@ -30,19 +32,25 @@ class ListAlbum(generics.ListCreateAPIView):
         return models.Album.objects.filter(user_id=self.request.user.id)
 
     def perform_create(self, serializer):
+        title_get = serializer.validated_data.get('title')
+        if title_get == "":
+            title_get = random.choice(list(open('api/random_album_titles.txt'))).rstrip()
+
         createAlbum(
             '/{}'.format(self.request.user.id),
-            serializer.validated_data.get('title'),
+            title_get,
             serializer.validated_data.get('quantity'),
             serializer.validated_data.get('warmth'),
             serializer.validated_data.get('sharpness'),
-            '/{}/{}.pdf'.format(self.request.user.id, serializer.validated_data.get('title'))
+            '/{}/{}.pdf'.format(self.request.user.id, title_get)
         )
 
         album = models.Album.objects.create(
-            title = serializer.validated_data.get('title'),
+            title = title_get,
             user_id = self.request.user.id
         )
+
+        models.Photo.objects.filter(user_id=self.request.user.id).delete()
 
 class DetailAlbum(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.Album.objects.all()
