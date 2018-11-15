@@ -170,8 +170,8 @@ class Header extends Component {
 
                         <Link to="/">
                             <Typography className={classes.title} variant="h6" color="inherit" noWrap>
-                                FINAL FRAME
-            </Typography>
+                                Pix N Match
+                            </Typography>
                         </Link>
                         <div className={classes.search}>
                             <div className={classes.searchIcon}>
