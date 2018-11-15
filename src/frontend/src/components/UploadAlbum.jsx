@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from "@material-ui/core/styles";
+<<<<<<< HEAD
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import { FilePond, registerPlugin } from 'react-filepond';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
@@ -20,6 +21,8 @@ const options = ({
     }
   }
 });
+=======
+>>>>>>> 5b7b859... *Change project structure, +Add Home Page
 
 const styles = theme => ({
   root: {
