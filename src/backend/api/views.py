@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAdminUser
 
 from . import models
 from . import serializers
+from .album_creation_helper import createAlbum
+from src.analysis.choose import Warmth
 
 class ListUser(generics.ListCreateAPIView):
     queryset = models.CustomUser.objects.all()
@@ -28,6 +30,15 @@ class ListAlbum(generics.ListCreateAPIView):
         return models.Album.objects.filter(user_id=self.request.user.id)
 
     def perform_create(self, serializer):
+        createAlbum(
+            '/{}'.format(self.request.user.id),
+            serializer.validated_data.get('title'),
+            serializer.validated_data.get('quantity'),
+            serializer.validated_data.get('warmth'),
+            serializer.validated_data.get('sharpness'),
+            '/{}/{}.pdf'.format(self.request.user.id, serializer.validated_data.get('title'))
+        )
+
         album = models.Album.objects.create(
             title = serializer.validated_data.get('title'),
             user_id = self.request.user.id
