@@ -25,9 +25,6 @@ class AlbumSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'quantity', 'warmth', 'sharpness')
 
 class UserSerializer(serializers.ModelSerializer):
-    photos = PhotoSerializer(many=True, required=False)
-    albums = AlbumSerializer(many=True, required=False)
-
     class Meta:
         model = models.CustomUser
-        fields = ('id', 'email', 'username', 'photos', 'albums')
+        fields = ('id', 'email', 'username')
