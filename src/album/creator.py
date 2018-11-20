@@ -11,7 +11,8 @@ def create_album(directory,
                  title="Album",
                  quantity=10,
                  get_specific_warmth=Warmth.WHATEVER,
-                 get_sharpest_photo=False):
+                 get_sharpest_photo=False,
+                 output="album.pdf"):
     dpi = 300
     background_size = (8.5, 11)
     background_color = (255, 255, 255, 255)
@@ -52,7 +53,7 @@ def create_album(directory,
 
     random.shuffle(pages)
 
-    pages.pop().save("album.pdf", save_all=True, append_images=pages)
+    pages.pop().save(output, save_all=True, append_images=pages)
 
 
 if __name__ == '__main__':
