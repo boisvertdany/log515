@@ -1,9 +1,14 @@
 from rest_framework import serializers
 from . import models
 
+class PhotoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Photo
+        fields = ('id', 'image')
+
 class AlbumSerializer(serializers.ModelSerializer):
     quantity = serializers.IntegerField()
-    warmth = serializers.CharField(max_length=255)
+    warmth = serializers.CharField(max_length=255, allow_blank=True)
     sharpness = serializers.BooleanField()
 
     def get_quantity(self, obj):
@@ -20,13 +25,9 @@ class AlbumSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'quantity', 'warmth', 'sharpness')
 
 class UserSerializer(serializers.ModelSerializer):
-    albums = AlbumSerializer(many=True)
+    photos = PhotoSerializer(many=True, required=False)
+    albums = AlbumSerializer(many=True, required=False)
 
     class Meta:
         model = models.CustomUser
-        fields = ('email', 'username', 'albums')
-
-class PhotoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = models.Photo
-        fields = ('id', 'image')
+        fields = ('id', 'email', 'username', 'photos', 'albums')

@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
 from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
 
 from . import models
 from . import serializers
@@ -9,6 +10,20 @@ from .album_creation_helper import createAlbum
 from src.analysis.choose import Warmth
 
 import random
+
+def setAlbumUri(data, request):
+    album_uri = '{}/media/albums/{}/{}.pdf'.format(
+        request.build_absolute_uri()[:-len(request.get_full_path())],
+        request.user.id,
+        data['title'].replace(' ', '%20')
+    )
+    data['album'] = album_uri
+    return data
+
+def setAlbumsUri(data, request):
+    for album in data:
+        setAlbumUri(album, request)
+    return data
 
 class ListUser(generics.ListCreateAPIView):
     queryset = models.CustomUser.objects.all()
@@ -31,6 +46,11 @@ class ListAlbum(generics.ListCreateAPIView):
     def get_queryset(self):
         return models.Album.objects.filter(user_id=self.request.user.id)
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(setAlbumsUri(serializer.data, request))
+
     def perform_create(self, serializer):
         title_get = serializer.validated_data.get('title')
         if title_get == "":
@@ -52,12 +72,17 @@ class ListAlbum(generics.ListCreateAPIView):
 
         models.Photo.objects.filter(user_id=self.request.user.id).delete()
 
-class DetailAlbum(generics.RetrieveUpdateDestroyAPIView):
+class DetailAlbum(generics.RetrieveDestroyAPIView):
     queryset = models.Album.objects.all()
     serializer_class = serializers.AlbumSerializer
 
     def get_queryset(self):
         return models.Album.objects.filter(user_id=self.request.user.id)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        return Response(setAlbumUri(serializer.data, request))
 
 class ListPhoto(generics.ListCreateAPIView):
     queryset = models.Photo.objects.all()
