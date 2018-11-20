@@ -54,7 +54,7 @@ class ListAlbum(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
         title_get = serializer.validated_data.get('title')
-        if title_get == "":
+        if title_get == '':
             title_get = random.choice(list(open('api/random_album_titles.txt'))).rstrip()
 
         createAlbum(
@@ -108,6 +108,22 @@ class ListPhoto(generics.ListCreateAPIView):
             image = serializer.validated_data.get('image'),
             user_id = self.request.user.id
         )
+        return photo
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        photo = self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        data = serializer.data
+        data['id'] = photo.id
+        photo_uri = '{}/media/{}'.format(
+            request.build_absolute_uri()[:-len(request.get_full_path())],
+            photo.image
+        )
+        data['image'] = photo_uri
+        return Response(data, status=status.HTTP_201_CREATED, headers=headers)
 
 class DetailPhoto(generics.RetrieveDestroyAPIView):
     queryset = models.Photo.objects.all()
