@@ -39,6 +39,8 @@ Logout : http://127.0.0.1:8000/api/v1/auth/logout/
 
 Register : http://127.0.0.1:8000/api/v1/auth/register/
 
+Password change : http://127.0.0.1:8000/api/v1/auth/password/change/
+
 User : http://127.0.0.1:8000/api/v1/user/
 
 Album : http://127.0.0.1:8000/api/v1/album/
@@ -50,7 +52,7 @@ $ curl -X POST http://localhost:8000/api/v1/auth/login/ -d "username=user1&passw
 
 {"key":"9418e432dc345f85fcb8d9b186becb88ef744ff0"}
 
-$ curl -H "Authorization: Token 9418e432dc345f85fcb8d9b186becb88ef744ff0" http://localhost:8000/api/v1/auth/user/
+$ curl -H "Authorization: Token 9418e432dc345f85fcb8d9b186becb88ef744ff0" http://localhost:8000/api/v1/user/
 
-{"pk":2,"username":"user1","email":"","first_name":"","last_name":""}
+{"id":2,"email":"","username":"user1"}
 
