@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework import generics
+from rest_framework import status
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
@@ -69,8 +70,19 @@ class ListAlbum(generics.ListCreateAPIView):
             title = title_get,
             user_id = self.request.user.id
         )
-
         models.Photo.objects.filter(user_id=self.request.user.id).delete()
+        return album
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        album = self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+
+        data = serializer.data
+        data['id'] = album.id
+        data['title'] = album.title
+        return Response(setAlbumUri(data, request), status=status.HTTP_201_CREATED, headers=headers)
 
 class DetailAlbum(generics.RetrieveDestroyAPIView):
     queryset = models.Album.objects.all()
