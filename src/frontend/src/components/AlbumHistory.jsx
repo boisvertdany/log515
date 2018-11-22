@@ -30,11 +30,19 @@ const styles = theme => ({
     margin: "auto",
     height: "18vh",
     marginTop: "10vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    color: "blue",
+
   },
   home_welcome_message: {
     ...theme.mixins.gutters(),
     marginTop: "55px",
     fontSize: "1rem"
+  },
+  title: {
+    color: "gray",
   }
 });
 
@@ -62,17 +70,14 @@ class AlbumView extends Component {
     const { classes } = this.props;
     console.log(this.props.match.params.id);
     var albumsToRender = this.state.albums ? this.state.albums.map((x, i) =>
-      <Paper key={i} className={classes.paper}>
-        <Typography variant="h5" component="h3">
-          {x.title}
-        </Typography>
-        {console.log(x)}
-        <a href={x.album}>
-          <Typography component="p" className={classes.home_welcome_message}>
-            Link to album.
-        </Typography>
-        </a>
-      </Paper>) : "";
+      <a href={x.album}>
+        <Paper key={i} className={classes.paper}>
+          <Typography className={classes.title} variant="h5" component="h3">
+            {x.title}
+          </Typography>
+        </Paper>
+      </a>)
+      : "";
 
     console.log(albumsToRender)
 
