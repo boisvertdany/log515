@@ -122,11 +122,13 @@ class UploadAlbum extends Component {
         "sharpness": this.state.blurred
       }
     }
-    axios(options);
+    axios(options).then((answer) => {
+      console.log(answer);
+      this.props.history.push('/album/' + answer.data.id);
+    });
   };
 
   render() {
-
     const { classes } = this.props;
     return (
       <div className={classes.upload_container}>

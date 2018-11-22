@@ -14,7 +14,7 @@ class Body extends Component {
         <Route path="/upload_album" component={UploadAlbum} />
         <Route path="/login" component={Login} />
         <Route path="/album_history/" exact={true} component={AlbumHistory} />
-        <Route path="/albums/:id" component={AlbumView} />
+        <Route path="/album/:id" component={AlbumView} />
       </div>
     );
   }
