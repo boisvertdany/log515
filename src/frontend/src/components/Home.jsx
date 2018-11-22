@@ -37,7 +37,6 @@ const styles = theme => ({
 function Home(props) {
   const { classes } = props;
 
-
   return (
     <div>
       <Paper className={classes.root} elevation={1}>
@@ -49,7 +48,7 @@ function Home(props) {
           authenticate in order to to keep an history of your uploaded
           albums or do you want to simply upload an album temporarily?
         </Typography>
-        <div class={classes.button_div}>
+        <div className={classes.button_div}>
           <Link to="/login">
             <Button size="large" color="primary" variant="outlined">
               Login

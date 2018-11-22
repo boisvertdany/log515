@@ -4,16 +4,12 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
-import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import Add from '@material-ui/icons/Add';
-import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
+import Add from '@material-ui/icons/AddPhotoAlternate';
+import PhotoLibrary from '@material-ui/icons/PhotoLibrary';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -138,23 +134,15 @@ class Header extends Component {
                 open={isMobileMenuOpen}
                 onClose={this.handleMobileMenuClose}
             >
-                <MenuItem>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <MailIcon />
-                        </Badge>
-                    </IconButton>
-                    <p>Messages</p>
-                </MenuItem>
-                <MenuItem>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={11} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                    <p>Notifications</p>
-                </MenuItem>
-                <MenuItem onClick={this.handleProfileMenuOpen}>
+                <Link to="/upload_album">
+                    <MenuItem onClick={this.handleMobileMenuClose}>
+                        <IconButton color="inherit">
+                            <Add />
+                        </IconButton>
+                        <p>Upload Album</p>
+                    </MenuItem>
+                </Link>
+                <MenuItem onClick={this.handleMobileMenuClose}>
                     <IconButton color="inherit">
                         <AccountCircle />
                     </IconButton>
@@ -173,33 +161,28 @@ class Header extends Component {
                                 Pix N Match
                             </Typography>
                         </Link>
-                        <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                            />
-                        </div>
                         <div className={classes.grow} />
                         <div className={classes.sectionDesktop}>
-                            <Link to="/add_album">
+                            <Link to="/upload_album">
                                 <IconButton color="inherit">
                                     <Add />
                                 </IconButton>
                             </Link>
-                            <IconButton
-                                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                                aria-haspopup="true"
-                                onClick={this.handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
+                            <Link to="/album_history">
+                                <IconButton color="inherit">
+                                    <PhotoLibrary />
+                                </IconButton>
+                            </Link>
+                            <Link to="/account">
+                                <IconButton
+                                    aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                                    aria-haspopup="true"
+                                    color="inherit"
+                                >
+                                    <AccountCircle />
+                                </IconButton>
+                            </Link>
+
                         </div>
                         <div className={classes.sectionMobile}>
                             <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
